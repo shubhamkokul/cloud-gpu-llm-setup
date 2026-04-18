@@ -19,7 +19,7 @@ Everything was executed and documented as it happened — not a tutorial written
 |-------|--------|
 | GPU Rental | Vast.ai |
 | Model Server | Ollama |
-| Model | Qwen 2.5 Coder 32B Q4_K_M |
+| Model | Qwen 2.5 Coder 14B Q4_K_M |
 | GPU | RTX 3090 24GB (~$0.15/hr) |
 | Connection | SSH Tunnel |
 

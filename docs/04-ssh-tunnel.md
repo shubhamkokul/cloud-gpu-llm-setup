@@ -92,7 +92,7 @@ Expected response:
 {
   "models": [
     {
-      "name": "qwen2.5-coder:32b",
+      "name": "qwen2.5-coder:14b",
       "size": 18500000000,
       ...
     }
@@ -107,7 +107,7 @@ Expected response:
 ```bash
 curl http://localhost:11434/api/generate \
   -d '{
-    "model": "qwen2.5-coder:32b",
+    "model": "qwen2.5-coder:14b",
     "prompt": "Write a Java method to check if a number is prime",
     "stream": false
   }'
@@ -123,7 +123,7 @@ This is the key insight — **aider doesn't need to know about the tunnel.**
 
 When you run:
 ```bash
-aider --model ollama_chat/qwen2.5-coder:32b
+aider --model ollama_chat/qwen2.5-coder:14b
 ```
 
 aider sees `ollama_chat/` prefix and automatically hits `http://localhost:11434`. That's the exact port the SSH tunnel is forwarding. The full chain:
@@ -138,7 +138,7 @@ From reality: model is running on a rented RTX 3090 in California.
 Verify the chain is live before starting aider:
 ```bash
 curl http://localhost:11434/api/tags
-# Should return: {"models":[{"name":"qwen2.5-coder:32b",...}]}
+# Should return: {"models":[{"name":"qwen2.5-coder:14b",...}]}
 ```
 
 If that returns the model — aider will work.
@@ -147,23 +147,37 @@ If that returns the model — aider will work.
 
 ## Connect Your Tools
 
-### aider (CLI coding agent)
+> See [ADR-001](adr-001-cline-vs-aider.md) for why Cline is recommended over aider.
+
+### Cline (VS Code) ⭐ Recommended
+
+```
+1. Open VS Code
+2. Extensions → search "Cline" → Install
+3. Cline sidebar → Settings (gear icon):
+   - API Provider: Ollama
+   - Base URL: http://localhost:11434
+   - Model: qwen2.5-coder:14b
+4. Open any project folder
+5. Ask Cline to make a change — it reads files, shows diffs, asks approval
+```
+
+Cline connects to `localhost:11434` — same port the tunnel forwards. It has no idea the model is remote. The full chain:
+
+```
+Cline → localhost:11434 → SSH tunnel → remote GPU:11434 → Ollama → Qwen 14B
+```
+
+### aider (CLI — secondary option)
 
 ```bash
 pip install aider-chat
 
 cd ~/your-project
-aider --model ollama_chat/qwen2.5-coder:32b --no-auto-commits
+aider --model ollama_chat/qwen2.5-coder:14b --no-auto-commits
 ```
 
-### Cline (VS Code)
-
-```
-1. Install Cline extension
-2. Settings → API Provider: Ollama
-3. Base URL: http://localhost:11434
-4. Model: qwen2.5-coder:32b
-```
+Use aider for headless/scripted workflows. Use Cline for interactive development.
 
 ### Continue (VS Code autocomplete)
 
@@ -173,7 +187,7 @@ aider --model ollama_chat/qwen2.5-coder:32b --no-auto-commits
   "models": [{
     "title": "Qwen 32B (Cloud GPU)",
     "provider": "ollama",
-    "model": "qwen2.5-coder:32b",
+    "model": "qwen2.5-coder:14b",
     "apiBase": "http://localhost:11434"
   }]
 }
@@ -187,7 +201,7 @@ import requests
 response = requests.post(
     "http://localhost:11434/api/generate",
     json={
-        "model": "qwen2.5-coder:32b",
+        "model": "qwen2.5-coder:14b",
         "prompt": "Write a binary search in Java",
         "stream": False
     }
