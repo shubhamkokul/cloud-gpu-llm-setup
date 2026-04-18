@@ -48,7 +48,7 @@ Output:
 ================================================
   Ollama SSH Tunnel
 ================================================
-  Remote : 209.146.116.50:36764
+  Remote : <your-instance-ip>:<your-ssh-port>
   Tunnel : localhost:11434 → remote:11434
   Key    : ~/.ssh/vastai-key
 ------------------------------------------------
@@ -66,8 +66,8 @@ Terminal will hang — that's correct. The tunnel is active as long as this term
 ```bash
 ssh -N \
     -L 11434:localhost:11434 \
-    -p 36764 \
-    root@209.146.116.50 \
+    -p <your-ssh-port> \
+    root@<your-instance-ip> \
     -i ~/.ssh/vastai-key \
     -o ServerAliveInterval=30
 ```
@@ -219,7 +219,7 @@ print(response.json()["response"])
 | Tunnel drops after a few minutes | Add `-o ServerAliveInterval=30 -o ServerAliveCountMax=3` — already in the script. |
 | `model not found` error | Model still downloading on remote. Check with `ssh ... "ollama list"`. |
 | First request very slow (30-60s) | Normal — model loading into VRAM. Second request will be fast. |
-| `ssh: connect to host ... port 36764: Connection refused` | Instance was destroyed or IP changed. Check Vast.ai dashboard for new connection details. |
+| `ssh: connect to host ... port <your-ssh-port>: Connection refused` | Instance was destroyed or IP changed. Check Vast.ai dashboard for new connection details. |
 
 ---
 
