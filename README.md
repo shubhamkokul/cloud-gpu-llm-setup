@@ -39,7 +39,7 @@ About $0.15/hr on a 3090. A $10 deposit covers ~65 hours of runtime.
 
 A React + TypeScript todo app built entirely using this setup — Cline + Qwen 14B on a rented RTX 3090:
 
-**[→ react-todo-cline-demo](https://github.com/shubhamkokul/react-todo-cline-demo)**
+**[→ priority-tasks](https://github.com/shubhamkokul/priority-tasks)**
 
 Features priority levels, filters, TypeScript. Generated via Cline connected to `localhost:11434` over SSH tunnel. No OpenAI or Anthropic involved.
 
