@@ -1,0 +1,15 @@
+# SSH Keys — NEVER commit private keys
+*.pem
+id_rsa
+id_ed25519
+vastai-key
+*_key
+!*.pub
+
+# Environment files
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
