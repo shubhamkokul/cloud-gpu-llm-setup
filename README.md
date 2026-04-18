@@ -35,9 +35,20 @@ Everything was executed and documented as it happened — not a tutorial written
 
 About $0.15/hr on a 3090. A $10 deposit covers ~65 hours of runtime.
 
+## Demo
+
+A React + TypeScript todo app built entirely using this setup — Cline + Qwen 14B on a rented RTX 3090:
+
+**[→ react-todo-demo](https://github.com/shubhamkokul/react-todo-cline-demo)** *(link TBD)*
+
+Features priority levels, filters, TypeScript. Generated via Cline connected to `localhost:11434` over SSH tunnel. No OpenAI or Anthropic involved.
+
+---
+
 ## Prerequisites
 
 - Vast.ai account
 - SSH client (OpenSSH)
 - curl
+- VS Code + Cline extension
 - Python 3.x + pip (for aider, optional)
