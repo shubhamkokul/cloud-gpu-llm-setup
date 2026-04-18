@@ -29,7 +29,8 @@ Everything was executed and documented as it happened — not a tutorial written
 - [02 — SSH Setup](docs/02-ssh-setup.md)
 - [03 — Deploy Ollama](docs/03-deploy-ollama.md) *(in progress)*
 - [04 — Connect via SSH Tunnel](docs/04-ssh-tunnel.md) *(in progress)*
-- [05 — Test & Benchmark](docs/05-test-benchmark.md) *(in progress)*
+- [05 — Test & Benchmark](docs/05-test-benchmark.md)
+- [06 — Backend API](docs/06-backend-api.md) *(in progress — replaces SSH tunnel)* *(in progress)*
 
 ## Cost
 
