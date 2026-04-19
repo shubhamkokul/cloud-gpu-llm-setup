@@ -18,8 +18,8 @@ Your Local Machine                    Remote GPU (Vast.ai)
 │  │   SSH Tunnel    │─────┼──────────┼─────────┘                │
 │  │  -L 11434:      │     │ encrypted│                          │
 │  │  localhost:     │     │   SSH    │  Model in VRAM           │
-│  │  11434          │     │          │  Qwen 2.5 Coder 32B      │
-│  └─────────────────┘     │          │  ~20GB / 24GB used       │
+│  │  11434          │     │          │  Qwen 2.5 Coder 14B      │
+│  └─────────────────┘     │          │  ~9GB / 24GB used        │
 │                          │          │                          │
 └──────────────────────────┘          └──────────────────────────┘
 
@@ -129,7 +129,7 @@ aider --model ollama_chat/qwen2.5-coder:14b
 aider sees `ollama_chat/` prefix and automatically hits `http://localhost:11434`. That's the exact port the SSH tunnel is forwarding. The full chain:
 
 ```
-aider → localhost:11434 → SSH tunnel → remote GPU:11434 → Ollama → Qwen 32B
+aider → localhost:11434 → SSH tunnel → remote GPU:11434 → Ollama → Qwen 14B
 ```
 
 From aider's perspective: model is local.
@@ -185,7 +185,7 @@ Use aider for headless/scripted workflows. Use Cline for interactive development
 // ~/.continue/config.json
 {
   "models": [{
-    "title": "Qwen 32B (Cloud GPU)",
+    "title": "Qwen 14B (Cloud GPU)",
     "provider": "ollama",
     "model": "qwen2.5-coder:14b",
     "apiBase": "http://localhost:11434"

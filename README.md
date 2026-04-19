@@ -7,9 +7,11 @@ Run open-source large language models on rented cloud GPUs — no OpenAI, no Ant
 A step-by-step, hands-on guide to:
 1. Renting a GPU on Vast.ai
 2. Deploying Ollama on the rented machine
-3. Running Qwen 2.5 Coder 32B (open-source, Apache 2.0 licensed)
+3. Running Qwen 2.5 Coder 14B (open-source, Apache 2.0 licensed)
 4. Connecting from your local machine via SSH tunnel
 5. Benchmarking and knowing when to stop billing
+
+Started with 32B as the target — evaluated it, then settled on 14B for unit economics. See [ADR-002](docs/adr-002-32b-vs-14b-model-selection.md) for the reasoning.
 
 Everything was executed and documented as it happened — not a tutorial written after the fact.
 
@@ -31,6 +33,11 @@ Everything was executed and documented as it happened — not a tutorial written
 - [04 — Connect via SSH Tunnel](docs/04-ssh-tunnel.md) *(in progress)*
 - [05 — Test & Benchmark](docs/05-test-benchmark.md)
 - [06 — Backend API](docs/06-backend-api.md) *(in progress — replaces SSH tunnel)* *(in progress)*
+
+### ADRs
+
+- [ADR-001 — Cline over aider](docs/adr-001-cline-vs-aider.md)
+- [ADR-002 — 14B over 32B model](docs/adr-002-32b-vs-14b-model-selection.md)
 
 ## Cost
 

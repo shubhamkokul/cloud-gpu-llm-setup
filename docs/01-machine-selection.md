@@ -6,7 +6,9 @@
 
 ## Goal
 
-Run a 32B parameter open-source LLM on a rented cloud GPU. No OpenAI. No Anthropic. Full control over the model.
+Run an open-source LLM on a rented cloud GPU. No OpenAI. No Anthropic. Full control over the model.
+
+Initial target was Qwen 2.5 Coder **32B** — we sized the GPU around it. After evaluation we settled on **14B** for unit economics. The 24GB GPU selection holds either way. See [ADR-002](adr-002-32b-vs-14b-model-selection.md) for why.
 
 ---
 
@@ -35,7 +37,7 @@ This immediately rules out any GPU with less than 24GB VRAM.
 
 ## Why RTX 3090
 
-- **24GB VRAM** — fits Qwen 32B at Q4_K_M with ~4GB headroom
+- **24GB VRAM** — sized to fit Qwen 32B at Q4_K_M with ~4GB headroom; more than enough for 14B (~9GB VRAM)
 - **$0.146/hr** — cheapest 24GB option available
 - **99.42% reliability** — above our 99% threshold
 - **7 month max duration** — stable host, not a fly-by-night listing
@@ -83,16 +85,16 @@ This instance had three problems not visible from the listing:
 
 | Problem | Impact | How to Avoid |
 |---------|--------|--------------|
-| Only 32GB disk allocated (requested 50GB) | Model = 19GB, leaves <8GB headroom. Any `ollama run` command tries to pull updates and fills disk instantly | Verify disk with `df -h /` immediately after connecting, before pulling model |
+| Only 32GB disk allocated (requested 50GB) | 32B model = 19GB, leaves <8GB headroom. Any `ollama run` command tries to pull updates and fills disk instantly. With 14B (~9GB) there's more breathing room, but still verify first. | Verify disk with `df -h /` immediately after connecting, before pulling model |
 | SSH daemon crashes when Ollama is restarted | Can't restart Ollama without losing SSH access | Use `nohup` properly, never kill Ollama in an active SSH session. Or use tmux. |
 | CUDA libraries missing after fresh Ollama install | Model ran on CPU (0% GPU) for hours | Always verify GPU detection after install: `grep 'inference compute' /var/log/ollama.log` |
 
 ### Pre-Flight Checklist (Run Before Pulling Any Model)
 
 ```bash
-# 1. Verify disk space — need at least 25GB free for a 32B model
+# 1. Verify disk space — need at least 15GB free for the 14B model
 df -h /
-# Must show: Avail > 25G
+# Must show: Avail > 15G
 
 # 2. Verify GPU is detected by Ollama
 ollama --version
@@ -102,7 +104,7 @@ grep 'inference compute' /var/log/ollama.log
 # Must show: library=CUDA ... name="NVIDIA GeForce RTX 3090"
 
 # 3. Only pull model after both checks pass
-ollama pull qwen2.5-coder:32b
+ollama pull qwen2.5-coder:14b
 ```
 
 ### Never Use `ollama run` for Inference
@@ -112,7 +114,7 @@ ollama pull qwen2.5-coder:32b
 Always use the API directly:
 ```bash
 curl http://localhost:11434/api/generate \
-  -d '{"model":"qwen2.5-coder:32b","prompt":"your prompt","stream":true}'
+  -d '{"model":"qwen2.5-coder:14b","prompt":"your prompt","stream":true}'
 ```
 
 ---
